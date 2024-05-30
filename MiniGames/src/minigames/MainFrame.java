@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
     JPanel pnlLogin1 = new JPanel(new GridLayout(3,2));
 
     public MainFrame(){
+        setLayout(new BorderLayout());
         lblTitle.setFont(new Font("cursive",Font.BOLD,25));
         //add(lblIcon);
         pnlHello.add(lblTitle);
@@ -51,7 +52,7 @@ public class MainFrame extends JFrame {
 
         setTitle("Mini Games");
         setSize(450,450);
-        setLayout(new BorderLayout());
+        
         setResizable(true);
         setLocationRelativeTo(null);
         setBackground(new Color(255, 204, 102));setVisible(true);
