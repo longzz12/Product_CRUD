@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
     JButton btnLogin = new JButton("Log in");
     JButton btnQuit = new JButton("Quit");
 
-    JPanel pnlHello = new JPanel(new FlowLayout());
+    JPanel pnlHello = new JPanel(new GridLayout(2,1));
     JPanel pnlLogin = new JPanel(new BorderLayout());
     JPanel pnlLogin1 = new JPanel(new GridLayout(3,2));
 
