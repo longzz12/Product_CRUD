@@ -2,9 +2,11 @@ package minigames;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
@@ -29,5 +31,16 @@ public class Homepage extends JFrame implements ActionListener{
         setBackground(new Color(255, 204, 102));
         setVisible(true);
 
+
+
+    }
+
+    public void actionPerformed(ActionEvent ae){
+        if(ae.getSource()==btnGame1)
+            return;
+        if (ae.getSource()==btnGame2)
+            return;
+        if(ae.getSource()==btnGame3)
+            return;
     }
 }
