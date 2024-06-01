@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -12,8 +14,10 @@ import javax.swing.JButton;
 // import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener {
+    int error =0;
     // ImageIcon icon = new ImageIcon("video-game-gamepad-icon.png");
     // JLabel lblIcon = new JLabel(icon);
     JLabel lblTitle = new JLabel("Welcome to our Homepage!");
@@ -33,7 +37,14 @@ public class MainFrame extends JFrame {
     JPanel pnlLogin1 = new JPanel(new GridLayout(3,2));
 
     public MainFrame(){
+        setTitle("Mini Games");
+        setSize(450,450);
         setLayout(new BorderLayout());
+        setResizable(true);
+        setLocationRelativeTo(null);
+        setBackground(new Color(255, 204, 102));
+        setVisible(true);
+
         lblTitle.setFont(new Font("cursive",Font.BOLD,25));
         //add(lblIcon);
         pnlHello.add(lblTitle);
@@ -49,14 +60,33 @@ public class MainFrame extends JFrame {
         add(pnlLogin,BorderLayout.CENTER);
 
         TextUser.setFocusable(true);
-
-        setTitle("Mini Games");
-        setSize(450,450);
-        
-        setResizable(true);
-        setLocationRelativeTo(null);
-        setBackground(new Color(255, 204, 102));setVisible(true);
+        TextPw.setEchoChar('*');
+        btnLogin.addActionListener(this);
+        btnQuit.addActionListener(this);
     }
+
+    public void actionPerformed(ActionEvent ae){
+        if(ae.getSource()== btnLogin){
+            if(TextUser.getText().compareTo("username")==0 && TextPw.getText().compareTo("123456")==0)
+                JOptionPane.showMessageDialog(null,"You're logged in!");
+            else{
+                if(error<=2){
+                    error+=1;
+                    JOptionPane.showMessageDialog(null,"Incorrect username or password! Please try again.");
+                }
+                else{
+                    TextPw.setEnabled(false);
+                    TextUser.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "Max attempt reached!");
+                }
+            }
+        }
+        if(ae.getSource()== btnQuit){
+            System.exit(0);
+        }
+
+    }
+
     public static void main(String[] args) {
         new MainFrame();
     }
