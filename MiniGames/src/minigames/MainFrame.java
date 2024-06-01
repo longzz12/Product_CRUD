@@ -1,17 +1,19 @@
 package minigames;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-// import javax.swing.ImageIcon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,13 +46,22 @@ public class MainFrame extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setBackground(new Color(255, 204, 102));
         setVisible(true);
+        // add(new Card());
+
 
         lblTitle.setFont(new Font("cursive",Font.BOLD,25));
-        //add(lblIcon);
+
+        // pnlHello.setIcon(icon);
         pnlHello.add(lblTitle);
         pnlHello.add(lblSubtitle);
 
         pnlLogin.add(lblLogin,BorderLayout.NORTH);
+        // lblUser.setMaximumSize(new Dimension(50, 30));
+        // lblPw.setMaximumSize(new Dimension(50, 30));
+        // TextUser.setMaximumSize(new Dimension(50, 30));
+        // TextPw.setMaximumSize(new Dimension(50, 30));
+
+        //pnlLogin1.setPreferredSize(new Dimension(100,50));
         pnlLogin1.add(lblUser);        pnlLogin1.add(TextUser);
         pnlLogin1.add(lblPw);          pnlLogin1.add(TextPw);
         pnlLogin1.add(btnLogin);       pnlLogin1.add(btnQuit);  
@@ -84,7 +95,6 @@ public class MainFrame extends JFrame implements ActionListener {
         if(ae.getSource()== btnQuit){
             System.exit(0);
         }
-
     }
 
     public static void main(String[] args) {
