@@ -11,8 +11,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 public class Homepage extends JFrame implements ActionListener {
-    
+
     JFrame frame = new JFrame();
     JLabel lblWelcome = new JLabel("Welcome!");
     JLabel lblChoice = new JLabel("Choose a game below to play.");
@@ -38,9 +50,9 @@ public class Homepage extends JFrame implements ActionListener {
         pnlHeading.add(lblWelcome);
         pnlHeading.add(lblChoice);
 
-        btnGame1.setSize(50, 10);
-        btnGame2.setSize(50,10);
-        btnGame3.setSize(50,10);
+        // btnGame1.setSize(50, 10);
+        // btnGame2.setSize(50,10);
+        // btnGame3.setSize(50,10);
 
         pnlChoice.add(btnGame1);
         pnlChoice.add(btnGame2);
@@ -53,7 +65,6 @@ public class Homepage extends JFrame implements ActionListener {
         btnGame1.addActionListener(this);
         btnGame2.addActionListener(this);
         btnGame3.addActionListener(this);
-
 
         frame.setTitle("Mini games");
         frame.setLocationRelativeTo(null);
@@ -68,14 +79,13 @@ public class Homepage extends JFrame implements ActionListener {
             frame.setVisible(false);
             new GuessNum();
         }
-        if(ae.getSource()==btnGame1){
+        if(ae.getSource()==btnGame2){
             frame.setVisible(false);
             new Hangman();
         }
-        if(ae.getSource()==btnGame1){
+        if(ae.getSource()==btnGame3){
             frame.setVisible(false);
             new RockPaperScissor();
         }
     }
 }
-

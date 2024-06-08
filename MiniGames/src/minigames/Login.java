@@ -28,8 +28,8 @@ public class Login extends JFrame implements ActionListener{
     JLabel lblUser = new JLabel("username: ");
     JLabel lblPw = new JLabel("password: ");
 
-    JTextField txtUser = new JTextField();
-    JPasswordField txtPw = new JPasswordField();
+    JTextField txtUser = new JTextField(20);
+    JPasswordField txtPw = new JPasswordField(20);
 
     JButton btnLogin = new JButton("Log in");
     JButton btnStart = new JButton("Start");
