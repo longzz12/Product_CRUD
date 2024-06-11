@@ -1,5 +1,6 @@
 package minigames;
 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,18 +32,22 @@ public class Login extends JFrame implements ActionListener{
     JTextField txtUser = new JTextField(20);
     JPasswordField txtPw = new JPasswordField(20);
 
+    JButton btnCreators = new JButton("Creators");
     JButton btnLogin = new JButton("Log in");
     JButton btnStart = new JButton("Start");
     JButton btnExit = new JButton("Exit");
 
-    JPanel pnlcontent = new JPanel(new BorderLayout(5, 5));
+    JPanel pnlcontent = new JPanel(new BorderLayout(5, 0));
     JPanel pnlWelcome = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
-    JPanel pnllogInfo = new JPanel(new GridLayout(2,2));
+    JPanel pnllogInfo1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
+    JPanel pnllogInfo2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
+    JPanel pnllogInfo = new JPanel(new FlowLayout(FlowLayout.CENTER, 5,-10));
     JPanel pnlBtn = new JPanel(new FlowLayout(FlowLayout.CENTER, 20 ,5));
 
     Login(){
 
         setLayout(new BorderLayout());
+
         
         lblTitle.setFont(new Font("Calibri", Font.BOLD, 23));
         
@@ -51,18 +56,16 @@ public class Login extends JFrame implements ActionListener{
         pnlWelcome.add(lblTitle);
         //pnlWelcome.add(lblsubTitle);
 
-        // lblUser.setSize(50, 20);
-        // txtUser.setSize(50, 20);
-        // lblPw.setSize(50, 20);
-        // txtPw.setSize(50, 20);
-
-        pnllogInfo.add(lblUser);
-        pnllogInfo.add(txtUser);
-        pnllogInfo.add(lblPw);
-        pnllogInfo.add(txtPw);
+        pnllogInfo1.add(lblUser);
+        pnllogInfo1.add(txtUser);
+        pnllogInfo2.add(lblPw);
+        pnllogInfo2.add(txtPw);
+        pnllogInfo.add(pnllogInfo1);
+        pnllogInfo.add(pnllogInfo2);
 
         // pnlBtn.setPreferredSize(new Dimension(200,100));
         btnStart.setVisible(false);
+        btnCreators.addActionListener(this);
         pnlBtn.add(btnStart);
         pnlBtn.add(btnLogin);
         pnlBtn.add(btnExit);
@@ -84,7 +87,7 @@ public class Login extends JFrame implements ActionListener{
         //frame.setBackground(new Color(255, 204, 102));
 
         frame.setLocationRelativeTo(null);
-        frame.setSize(500, 270);
+        frame.setSize(500, 230);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
