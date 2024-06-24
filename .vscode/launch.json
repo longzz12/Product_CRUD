@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "studentBackground",
+      "request": "launch",
+      "mainClass": "minigames.studentBackground",
+      "projectName": "JavaProject_fc2c3e88"
+    },
+    {
+      "type": "java",
       "name": "Main",
       "request": "launch",
       "mainClass": "minigames.Main",

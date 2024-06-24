@@ -48,7 +48,6 @@ public class Login extends JFrame implements ActionListener{
 
         setLayout(new BorderLayout());
 
-        
         lblTitle.setFont(new Font("Calibri", Font.BOLD, 23));
         
         //lblTitle.setIcon(icon);
@@ -89,7 +88,7 @@ public class Login extends JFrame implements ActionListener{
         frame.setLocationRelativeTo(null);
         frame.setSize(500, 230);
         frame.setVisible(true);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public void actionPerformed(ActionEvent ae){

@@ -104,7 +104,8 @@ public class GuessNum extends JFrame implements ActionListener{
                 txtRecord.add(record);
                 JOptionPane.showMessageDialog(null, record());
             }
-
+            txtGuess.setText("");
+            txtGuess.requestFocus();
         }
         if(ae.getSource()== btnQuit){
             System.exit(0);
