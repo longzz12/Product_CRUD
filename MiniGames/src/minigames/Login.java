@@ -1,6 +1,5 @@
 package minigames;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +9,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
 
 public class Login extends JFrame implements ActionListener{
     JFrame frame = new JFrame();
@@ -32,49 +36,41 @@ public class Login extends JFrame implements ActionListener{
     JTextField txtUser = new JTextField(20);
     JPasswordField txtPw = new JPasswordField(20);
 
-    JButton btnCreators = new JButton("Creators");
     JButton btnLogin = new JButton("Log in");
     JButton btnStart = new JButton("Start");
     JButton btnExit = new JButton("Exit");
 
-    JPanel pnlcontent = new JPanel(new BorderLayout(5, 0));
+    JPanel pnlcontent = new JPanel();
     JPanel pnlWelcome = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
     JPanel pnllogInfo1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
     JPanel pnllogInfo2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
-    JPanel pnllogInfo = new JPanel(new FlowLayout(FlowLayout.CENTER, 5,-10));
+    JPanel pnllogInfo = new JPanel();
     JPanel pnlBtn = new JPanel(new FlowLayout(FlowLayout.CENTER, 20 ,5));
 
     Login(){
-
+        pnlcontent.setLayout(new BoxLayout(pnlcontent, BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
-
         
         lblTitle.setFont(new Font("Calibri", Font.BOLD, 23));
         
-        //lblTitle.setIcon(icon);
-
         pnlWelcome.add(lblTitle);
-        //pnlWelcome.add(lblsubTitle);
-
-        pnllogInfo1.add(lblUser);
-        pnllogInfo1.add(txtUser);
-        pnllogInfo2.add(lblPw);
-        pnllogInfo2.add(txtPw);
+        pnlWelcome.setBackground(Color.LIGHT_GRAY);
+        pnllogInfo1.add(lblUser);  pnllogInfo1.add(txtUser);
+        pnllogInfo2.add(lblPw);    pnllogInfo2.add(txtPw);
+        pnllogInfo.setLayout(new BoxLayout(pnllogInfo, BoxLayout.Y_AXIS));
         pnllogInfo.add(pnllogInfo1);
         pnllogInfo.add(pnllogInfo2);
 
-        // pnlBtn.setPreferredSize(new Dimension(200,100));
         btnStart.setVisible(false);
-        btnCreators.addActionListener(this);
         pnlBtn.add(btnStart);
         pnlBtn.add(btnLogin);
         pnlBtn.add(btnExit);
         
-        pnlcontent.add(pnlWelcome, BorderLayout.NORTH);
-        pnlcontent.add(pnllogInfo, BorderLayout.CENTER);
-        pnlcontent.add(pnlBtn, BorderLayout.SOUTH);
+        pnlcontent.add(pnlWelcome);
+        pnlcontent.add(pnllogInfo);
+        pnlcontent.add(pnlBtn);
 
-        frame.add(pnlcontent);
+        frame.add(pnlcontent, BorderLayout.NORTH);
 
         btnLogin.addActionListener(this);
         btnExit.addActionListener(this);
@@ -83,9 +79,19 @@ public class Login extends JFrame implements ActionListener{
         txtUser.setFocusable(true);
         txtPw.setEchoChar('*');
 
+        txtUser.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent ke){
+                if(ke.getKeyCode()== KeyEvent.VK_ENTER)
+                    txtPw.requestFocus();
+            }
+        });
+        txtPw.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent ke){
+                if(ke.getKeyCode()== KeyEvent.VK_ENTER)
+                    loggingIn();}
+        });
+        
         frame.setTitle("Mini games");
-        //frame.setBackground(new Color(255, 204, 102));
-
         frame.setLocationRelativeTo(null);
         frame.setSize(500, 230);
         frame.setVisible(true);
@@ -94,23 +100,7 @@ public class Login extends JFrame implements ActionListener{
     }
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource()== btnLogin){
-            if(txtUser.getText().compareTo("user")==0 && String.valueOf(txtPw.getPassword()).compareTo("123456")==0){
-                JOptionPane.showMessageDialog(null,"You're logged in!");
-                btnLogin.setVisible(false);
-                btnStart.setVisible(true);
-                }
-            else{
-                if(error<=2){
-                    error+=1;
-                    JOptionPane.showMessageDialog(null,"Incorrect username or password! Please try again.");
-                }
-                else{
-                    txtPw.setEnabled(false);
-                    txtUser.setEnabled(false);
-                    btnLogin.setEnabled(false);
-                    JOptionPane.showMessageDialog(null, "Max attempt reached!");
-                }
-            }
+            loggingIn();
         }
         if(ae.getSource()== btnExit){
             System.exit(0);
@@ -118,6 +108,25 @@ public class Login extends JFrame implements ActionListener{
         if(ae.getSource()==btnStart){
             frame.setVisible(false);
             new Homepage();
+        } 
+    }
+    public void loggingIn(){
+        if(txtUser.getText().compareTo("user")==0 && String.valueOf(txtPw.getPassword()).compareTo("123456")==0){
+            JOptionPane.showMessageDialog(null,"You're logged in!");
+            btnLogin.setVisible(false);
+            btnStart.setVisible(true);
+            }
+        else{
+            if(error<=2){
+                error+=1;
+                JOptionPane.showMessageDialog(null,"Incorrect username or password! \nPlease try again.");
+            }
+            else{
+                txtPw.setEnabled(false);
+                txtUser.setEnabled(false);
+                btnLogin.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Max attempt reached!");
+            }
         }
     }
 }

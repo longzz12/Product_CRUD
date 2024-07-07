@@ -1,8 +1,10 @@
 package minigames;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -38,7 +40,7 @@ public class Homepage extends JFrame implements ActionListener {
     JButton btnGame3 = new JButton("Rock-Paper-Scissor");
 
     JPanel pnlHeading = new JPanel(new GridLayout(2, 1));
-    JPanel pnlChoice = new JPanel(new GridLayout(1, 3, 20, 10));
+    JPanel pnlChoice = new JPanel(new FlowLayout(FlowLayout.CENTER, 5,5));
     JPanel pnlContent = new JPanel(new BorderLayout(10, 10));
 
     Homepage(){
@@ -49,11 +51,12 @@ public class Homepage extends JFrame implements ActionListener {
         
         pnlHeading.add(lblWelcome);
         pnlHeading.add(lblChoice);
+        // pack();
 
         // btnGame1.setSize(50, 10);
         // btnGame2.setSize(50,10);
         // btnGame3.setSize(50,10);
-
+        lblChoice.setHorizontalAlignment(JLabel.CENTER);
         pnlChoice.add(btnGame1);
         pnlChoice.add(btnGame2);
         pnlChoice.add(btnGame3);
@@ -68,9 +71,9 @@ public class Homepage extends JFrame implements ActionListener {
 
         frame.setTitle("Mini games");
         frame.setLocationRelativeTo(null);
-        frame.setSize(500, 270);
+        frame.setSize(500, 150);
         frame.setVisible(true);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
