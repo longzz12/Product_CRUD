@@ -12,11 +12,6 @@ public class Main {
         } catch (UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new FormProduct();
-            }
-        });
+        SwingUtilities.invokeLater(FormProduct::new);
     }
 }

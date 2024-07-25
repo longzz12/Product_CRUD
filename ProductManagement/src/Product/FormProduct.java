@@ -2,6 +2,16 @@ package Product;
 
 import java.awt.event.*;
 import java.awt.*;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.security.auth.callback.ConfirmationCallback;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,14 +28,15 @@ public class FormProduct implements ActionListener{
     JTextField txtName = new JTextField();
     JTextField txtQty = new JTextField();
     JTextField txtPrice = new JTextField();
-    JButton btnAdd = new JButton("Add");
+    JButton btnWrite = new JButton("Write");
+    JButton btnRead = new JButton("Read");
     JButton btnUpdate = new JButton("Update");
     JButton btnDelete = new JButton("Delete");
     JButton btnClear = new JButton("Clear");
     JTable table = new JTable();
     JScrollPane scrollPane = new JScrollPane(table);
     
-    
+    private ArrayList<ProductModel> listAdd =new ArrayList<ProductModel>();
     
     String[][] data = {};
     String[] header = { "ID", "Name", "Quantity","Price"};
@@ -90,28 +101,31 @@ public class FormProduct implements ActionListener{
         txtPrice.setFont(new Font("Arail",Font.PLAIN,14));
 	//txtPrice.setForeground(new Color(25,255,0));
         
-        btnAdd.setBounds(50, 550, 100, 40);
-        btnAdd.setBackground(Color.GREEN.darker());
-        btnAdd.setForeground(Color.white);
+        btnWrite.setBounds(50, 550, 100, 40);
+        btnWrite.setBackground(Color.GREEN.darker());
+        btnWrite.setForeground(Color.white);
         
         
-        btnUpdate.setBounds(200, 550, 100, 40);
+        btnRead.setBounds(200, 550, 100, 40);
+        btnRead.setBackground(Color.CYAN.darker());
+        btnRead.setForeground(Color.white);
+//        
+        btnUpdate.setBounds(350, 550, 100, 40);
         btnUpdate.setBackground(Color.blue);
         btnUpdate.setForeground(Color.white);
+//        
+//        btnClear.setBounds(500, 550, 100, 40);
+//        btnClear.setBackground(Color.GRAY);
+//        btnClear.setForeground(Color.white);
         
-        btnDelete.setBounds(350, 550, 100, 40);
-        btnDelete.setBackground(Color.red);
-        btnDelete.setForeground(Color.white);
-        
-        btnClear.setBounds(500, 550, 100, 40);
-        btnClear.setBackground(Color.GRAY);
-        btnClear.setForeground(Color.white);
-        
-        btnAdd.addActionListener(this);
+        btnWrite.addActionListener(this);
+        btnRead.addActionListener(this);
         btnUpdate.addActionListener(this);
-        btnDelete.addActionListener(this);
-        btnClear.addActionListener(this);
-        frame.add(btnAdd);
+//        btnDelete.addActionListener(this);
+//        btnClear.addActionListener(this);
+        
+        frame.add(btnWrite);
+        frame.add(btnRead);
         frame.add(btnUpdate);
         frame.add(btnDelete);
         frame.add(btnClear);
@@ -132,8 +146,8 @@ public class FormProduct implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == btnAdd) {
-            var id = txtId.getText();
+        if(ae.getSource() == btnWrite) {
+            /*var id = txtId.getText();
             var name = txtName.getText();
             var qty = txtQty.getText();
             var price = txtPrice.getText();
@@ -151,15 +165,22 @@ public class FormProduct implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Please enter all field!");
             }
             clearAllField();
+            */
+            myWrite();
+        }
+        if(ae.getSource() == btnRead) {
+            myRead();
         }
         if(ae.getSource() == btnUpdate) {
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            
-            var id = txtId.getText();
-            var name = txtName.getText();
-            var qty = txtQty.getText();
-            var price = txtPrice.getText();
-            if(!id.isEmpty() && !name.isEmpty() && !qty.isEmpty() && !price.isEmpty()){
+            try {
+                update();
+                /*DefaultTableModel model = (DefaultTableModel) table.getModel();
+                
+                var id = txtId.getText();
+                var name = txtName.getText();
+                var qty = txtQty.getText();
+                var price = txtPrice.getText();
+                if(!id.isEmpty() && !name.isEmpty() && !qty.isEmpty() && !price.isEmpty()){
                 if(table.getSelectedRowCount() == 1) {
                 model.setValueAt(id, table.getSelectedRow(), 0);
                 model.setValueAt(name, table.getSelectedRow(), 1);
@@ -167,29 +188,46 @@ public class FormProduct implements ActionListener{
                 model.setValueAt(price, table.getSelectedRow(), 3);
                 
             
-                JOptionPane.showMessageDialog(null, "Update successful...");
+                JOptionPane.showMessageDialog(null, "Product updated...");
                 }
                 else if(table.getSelectedRowCount() == 0) {
-                    JOptionPane.showConfirmDialog(null, "Please select a Product!");
+                JOptionPane.showConfirmDialog(null, "Please select a Product!");
                 }
-            }
-            else {
+                }
+                else {
                 JOptionPane.showConfirmDialog(null, "Please enter all field!");
+                }
+                clearAllField();
+                */
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(FormProduct.class.getName()).log(Level.SEVERE, null, ex);
             }
-            clearAllField();
+           
         }
         if(ae.getSource() == btnDelete) {
+            
             DefaultTableModel model = (DefaultTableModel) table.getModel();
-            if(table.getSelectedRowCount() == 1) {
-                model.removeRow(table.getSelectedRow());
-                JOptionPane.showConfirmDialog(null, "Remove product from table successful...");
-            }else{
-                if(table.getSelectedRowCount() == 0) {
-                    JOptionPane.showConfirmDialog(null, "The table is empty!");
+            if(table.getSelectedRowCount() == 1 ){
+                 
+            }
+            /*var makeSure = JOptionPane.showConfirmDialog(null, "Do you want to delete this product?", "Confirmation", ConfirmationCallback.YES_NO_OPTION);
+            if(makeSure == JOptionPane.YES_OPTION) {
+                if(table.getSelectedRowCount() == 1) {
+                    model.removeRow(table.getSelectedRow());
+                    JOptionPane.showConfirmDialog(null, "Remove product from table successful...");
                 }else{
-                    JOptionPane.showConfirmDialog(null, "Please select a Product!");
+                    if(table.getSelectedRowCount() == 0) {
+                        JOptionPane.showConfirmDialog(null, "The table is empty!");
+                    }else{
+                        JOptionPane.showConfirmDialog(null, "Please select a Product!");
+                    }
                 }
             }
+            else if(makeSure == JOptionPane.NO_OPTION){
+                return;
+            }
+            */
+            
         }
         if(ae.getSource() == btnClear) {
             var makeSure = JOptionPane.showConfirmDialog(null, "Do you want to clear this table?", "Confirmation", ConfirmationCallback.YES_NO_OPTION);
@@ -221,6 +259,93 @@ public class FormProduct implements ActionListener{
         txtName.setText("");
         txtQty.setText("");
         txtPrice.setText("");
+    }
+    
+    public void clearTable(){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for(int i=model.getRowCount()-1;i>=0;i--){
+            model.removeRow(i);
+        }
+   }
+    
+//    public void myAdd(){
+//        DefaultTableModel model = (DefaultTableModel) table.getModel();
+//        Object []row={txtId.getText(),txtName.getText(),txtQty.getText(),txtPrice.getText()};
+//        model.addRow(row);
+//   }
+    public void update() throws ClassNotFoundException {
+        listAdd.add(getProductModel());
+        try{
+            
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            if(table.getSelectedRowCount() == 1){
+                FileInputStream inFile = new FileInputStream("C:\\Users\\rinpi\\OneDrive\\Desktop\\RUPP\\JavaProject1\\ProductStore.txt");
+                ObjectInputStream objIn = new ObjectInputStream(inFile);
+//                ProductModel obj = (ProductModel)objIn.readObject();
+                listAdd =(ArrayList<ProductModel>)objIn.readObject();
+                inFile.close();
+                objIn.close();
+                listAdd =(ArrayList<ProductModel>)objIn.readObject();
+                //listAdd.removeIf((value) -> value.equals(model.getValueAt(1, 1)));
+            }
+            
+            
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void  myWrite(){
+      listAdd.add(getProductModel());
+      try{
+         ObjectOutputStream out=new ObjectOutputStream(new
+                 FileOutputStream("C:\\Users\\rinpi\\OneDrive\\Desktop\\RUPP\\JavaProject1\\ProductStore.txt"));
+         out.writeObject(listAdd);
+         JOptionPane.showMessageDialog(null, "Write succesfully");
+         
+         out.close();
+      }catch(IOException e){e.printStackTrace();}
+   }
+    public void myRead(){
+      listAdd.clear();
+      clearTable();
+      read();
+      addToTable(listAdd);
+    }
+    public ProductModel getProductModel() {
+        int id = Integer.parseInt(txtId.getText());
+        int qty = Integer.parseInt(txtQty.getText());
+        String name = txtName.getText();
+        double price = Double.parseDouble(txtPrice.getText());
+        clearAllField();
+        
+        return new ProductModel(id, name, qty, price);
+    }
+    public void read(){
+      try{
+         ObjectInputStream in=new ObjectInputStream(new
+                 FileInputStream("C:\\Users\\rinpi\\OneDrive\\Desktop\\RUPP\\JavaProject1\\ProductStore.txt"));
+         try{
+            while(true){
+                  listAdd =(ArrayList<ProductModel>)in.readObject();
+            }		
+         }
+      catch(EOFException e){in.close(); }
+      catch(ClassNotFoundException e){e.printStackTrace();}
+      //JOptionPane.showMessageDialog(null, "Read  suceesfully");
+      }catch(IOException e){e.printStackTrace();}
+    }
+    public void addToTable(ArrayList<ProductModel>listAdd){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for(int i=0;i<listAdd.size();i++){
+            Object[] row = {
+                listAdd.get(i).getId(),
+                listAdd.get(i).getName(),
+                listAdd.get(i).getQty(),
+                listAdd.get(i).getPrice()
+            };
+            model.addRow(row);
+        }
     }
 }
     
